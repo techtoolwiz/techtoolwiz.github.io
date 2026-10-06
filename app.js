@@ -1,4 +1,4 @@
-/* WizOS workspace: tool library + block canvas. All processing runs in the browser. */
+﻿/* WizOS workspace: tool library + block canvas. All processing runs in the browser. */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -379,7 +379,7 @@ function docTool(el) {
 }
 
 /* ---------- Footer pages (About / Contact / Privacy) ---------- */
-const CONTACT_EMAIL = ''; // put your public contact email here, e.g. 'hello@example.com'
+const CONTACT_EMAIL = 'thegamer.sridhar@gmail.com'; // put your public contact email here, e.g. 'hello@example.com'
 const REPO_URL = 'https://github.com/techtoolwiz/techtoolwiz.github.io';
 const INFO = {
   about: ['About WizOS', '<p>WizOS is a free workspace of everyday tech tools — documents, media, writing and AI helpers — in one place. It is part of <b>Tech Tool Wiz</b>, made by Sridhar Kulkarni.</p><p>Most tools run entirely inside your browser, so your files stay on your device.</p>'],
@@ -557,7 +557,7 @@ function padTool(el) {
    offline or out of quota, the next backup takes over automatically (the person never has to retry).
    Each feature also has its own daily limits (AI_LIMITS). Limits are counted in the visitor's browser
    to keep usage fair; real server-side limits belong in your Cloudflare Worker. */
-const AI_URL = 'https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev'; // MAIN chat AI: your Cloudflare Worker
+const AI_URL = 'https://wizos-ai.thegamer-sridhar.workers.dev'; // MAIN chat AI: your Cloudflare Worker
 const POLL_URL = 'https://text.pollinations.ai/openai'; // free backup AI (no key needed)
 const AI_LIMITS = {
   assistant: { label: 'the AI Assistant', noun: 'messages', req: 40, chars: 80000, max: 26000, gap: 1200 },

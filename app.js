@@ -1,4 +1,4 @@
-﻿/* WizOS workspace: tool library + block canvas. All processing runs in the browser. */
+/* WizOS workspace: tool library + block canvas. All processing runs in the browser. */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -89,9 +89,15 @@ let ffP = null;
 const FF_CORE = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
 const asBlobURL = async (url, type) => { const r = await fetch(url); if (!r.ok) throw new Error(`${url.split('/').pop()} not found (${r.status})`); return URL.createObjectURL(new Blob([await r.arrayBuffer()], { type })); };
 const ffFetchFile = async (f) => new Uint8Array(await f.arrayBuffer());
-async function ffViaOwnFiles() { // needs vendor/ffmpeg.js and vendor/814.ffmpeg.js uploaded next to index.html (a browser will not start a worker from another website)
-  await loadScript('vendor/ffmpeg.js'); const ff = new window.FFmpegWASM.FFmpeg();
-  await ff.load({ coreURL: await asBlobURL(`${FF_CORE}/ffmpeg-core.js`, 'text/javascript'), wasmURL: await asBlobURL(`${FF_CORE}/ffmpeg-core.wasm`, 'application/wasm') });
+async function ffViaOwnFiles() {
+  await loadScript('vendor/ffmpeg.js'); // sets window.FFmpegWASM
+  const workerURL = await asBlobURL('vendor/814.ffmpeg.js', 'text/javascript');
+  const ff = new window.FFmpegWASM.FFmpeg();
+  await ff.load({
+    coreURL: await asBlobURL(`${FF_CORE}/ffmpeg-core.js`, 'text/javascript'),
+    wasmURL: await asBlobURL(`${FF_CORE}/ffmpeg-core.wasm`, 'application/wasm'),
+    classWorkerURL: workerURL,
+  });
   return { ff, fetchFile: ffFetchFile };
 }
 async function ffViaCdn() {
@@ -379,7 +385,7 @@ function docTool(el) {
 }
 
 /* ---------- Footer pages (About / Contact / Privacy) ---------- */
-const CONTACT_EMAIL = 'thegamer.sridhar@gmail.com'; // put your public contact email here, e.g. 'hello@example.com'
+const CONTACT_EMAIL = ''; // put your public contact email here, e.g. 'hello@example.com'
 const REPO_URL = 'https://github.com/techtoolwiz/techtoolwiz.github.io';
 const INFO = {
   about: ['About WizOS', '<p>WizOS is a free workspace of everyday tech tools — documents, media, writing and AI helpers — in one place. It is part of <b>Tech Tool Wiz</b>, made by Sridhar Kulkarni.</p><p>Most tools run entirely inside your browser, so your files stay on your device.</p>'],

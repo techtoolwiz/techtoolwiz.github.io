@@ -90,8 +90,8 @@ const FF_CORE = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';
 const asBlobURL = async (url, type) => { const r = await fetch(url); if (!r.ok) throw new Error(`${url.split('/').pop()} not found (${r.status})`); return URL.createObjectURL(new Blob([await r.arrayBuffer()], { type })); };
 const ffFetchFile = async (f) => new Uint8Array(await f.arrayBuffer());
 async function ffViaOwnFiles() {
-  await loadScript('vendor/ffmpeg.js'); // sets window.FFmpegWASM
-  const workerURL = await asBlobURL('vendor/814.ffmpeg.js', 'text/javascript');
+  await loadScript('/vendor/ffmpeg.js'); // sets window.FFmpegWASM
+  const workerURL = await asBlobURL('/vendor/814.ffmpeg.js', 'text/javascript');
   const ff = new window.FFmpegWASM.FFmpeg();
   await ff.load({
     coreURL: await asBlobURL(`${FF_CORE}/ffmpeg-core.js`, 'text/javascript'),
@@ -956,14 +956,14 @@ const TOOLS = [
   { id: 'ai', name: 'AI Assistant', icon: 'fa-brain', group: 'AI & Writing', render: aiTool },
   { id: 'media', name: 'Media Converter', icon: 'fa-photo-film', group: 'Image & Media', render: mediaTool },
   { id: 'bg', name: 'Background Remover', icon: 'fa-wand-magic-sparkles', group: 'Image & Media', render: bgTool },
-  { id: 'docs', name: 'Document Tools', icon: 'fa-file-pdf', group: 'Documents', render: docTool },
+  { id: 'docs', name: 'Document Toolkit', icon: 'fa-file-pdf', group: 'Documents', render: docTool },
   { id: 'compare', name: 'Compare', icon: 'fa-code-compare', group: 'Documents', render: compareTool },
   { id: 'write', name: 'Translate & Grammar', icon: 'fa-language', group: 'Writing & Language', render: writeTool },
   { id: 'speak', name: 'Read & Speak', icon: 'fa-microphone-lines', group: 'Writing & Language', render: speakTool },
   { id: 'letter', name: 'Letter & Form Writer', icon: 'fa-envelope-open-text', group: 'AI & Writing', render: letterTool },
   { id: 'tricks', name: 'Web Tricks', icon: 'fa-terminal', group: 'Learn', render: tricksTool },
   { id: 'qr', name: 'QR Generator', icon: 'fa-qrcode', group: 'Quick Utilities', render: qrTool },
-  { id: 'rec', name: 'Screen Recorder', icon: 'fa-video', group: 'Quick Utilities', render: recorderTool },
+  { id: 'rec', name: 'Display Recorder', icon: 'fa-video', group: 'Quick Utilities', render: recorderTool },
   { id: 'pad', name: 'Scratchpad', icon: 'fa-note-sticky', group: 'Quick Utilities', render: padTool },
 ];
 const toolById = (id) => TOOLS.find((t) => t.id === id);
